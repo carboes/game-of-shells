@@ -1,3 +1,2 @@
-Game of Shells by Carl Peterken
-### `yarn`
-### `yarn start`
+# Game of Shells by Carl Peterken
+To start: `yarn && yarn start`
