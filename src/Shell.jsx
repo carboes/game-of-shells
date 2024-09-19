@@ -3,12 +3,7 @@ import { useSpring, animated } from '@react-spring/three';
 
 export const Shell = ({ index, position, lastPosition, hasBall, transparent, duration, handleClick, active }) => {
   const $mesh = useRef();
-
-  const [selected, setSelected] = useState(false);
-  const onSelect = () => {
-    setSelected(true);
-    handleClick(index);
-  };
+  const onSelect = () => handleClick(index);
   const [hover, setHover] = useState(false);
   const { shellColor, shellTransparency } = useSpring({
     shellColor: hover ? 'green' : active ? 'red' : 'blue',
@@ -23,7 +18,7 @@ export const Shell = ({ index, position, lastPosition, hasBall, transparent, dur
         ballPosition: [lastPosition, 0, 0]
       },
       to: async (next) => {
-        if (lastPosition !== position && !selected) {
+        if (lastPosition !== position && !active) {
           const midPosition = [(position + lastPosition) / 2, (position - lastPosition) / 2, 0];
           await next({
             shellPosition: midPosition,
@@ -32,14 +27,15 @@ export const Shell = ({ index, position, lastPosition, hasBall, transparent, dur
         }
         await next({
           // raise shell on player guess
-          shellPosition: [position, 0, selected ? 2 : 0],
+          shellPosition: [position, 0, active ? 2 : 0],
           ballPosition: [position, 0, 0]
         });
       },
       config: { mass: 1, tension: 170, friction: 26, duration } // Smoothness of the animation
     },
-    [lastPosition, position, selected, hasBall]
+    [lastPosition, position, active, hasBall]
   );
+  
   return (
     <>
       <animated.mesh

@@ -102,7 +102,7 @@ export const useGameLogic = (
   };
 
   const handleShellClick = (index) => {
-    if (playerGuess === null) {
+    if (playerGuess === null && playing && shuffleCount === totalShuffles) {
       setPlayerGuess(index);
       setResult(index === ballIndex);
     }
