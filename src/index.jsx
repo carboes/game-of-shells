@@ -9,7 +9,7 @@ const App = () => {
     totalShells: {
       min: 3,
       max: 7,
-      value: 5,
+      value: 3,
       step: 2,
     },
     duration: {
